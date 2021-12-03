@@ -2,6 +2,7 @@ package com.dmp.livedataindetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.dmp.livedataindetail.databinding.ActivityMainBinding
@@ -24,12 +25,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.onButtonClicked()
         }
 
-        viewModel.textViewInfoLiveData.observe(this) { info ->
+        viewModel.segmentStateLiveData.observe(this) { colorRes ->
 
-            binding.textView.apply {
-                text = info.text
-                rotation = info.rotation.toFloat()
-                setBackgroundColor(info.backgroundColor)
+            binding.segment.root.apply {
+                val resolvedColor = ContextCompat.getColor(context, colorRes)
+                setCardBackgroundColor(resolvedColor)
             }
         }
     }
