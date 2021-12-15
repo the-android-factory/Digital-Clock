@@ -1,12 +1,12 @@
 package com.dmp.livedataindetail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.ColorRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
 import com.dmp.livedataindetail.databinding.ActivityMainBinding
+import com.dmp.livedataindetail.databinding.LayoutDigitDisplayBinding
 import com.google.android.material.card.MaterialCardView
 import java.util.*
 
@@ -23,23 +23,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        bindLiveData(viewModel.segmentTopLiveData, binding.segmentTop.root)
-        bindLiveData(viewModel.segmentTopLeftLiveData, binding.segmentTopLeft.root)
-        bindLiveData(viewModel.segmentTopRightLiveData, binding.segmentTopRight.root)
-        bindLiveData(viewModel.segmentMiddleLiveData, binding.segmentMiddle.root)
-        bindLiveData(viewModel.segmentBottomLeftLiveData, binding.segmentBottomLeft.root)
-        bindLiveData(viewModel.segmentBottomRightLiveData, binding.segmentBottomRight.root)
-        bindLiveData(viewModel.segmentBottomLiveData, binding.segmentBottom.root)
+        viewModel.secondsLeftDisplayManager.digitDisplayLiveData.observe(this) { map ->
+            setupLayoutWithNewDigit(binding.layoutSecondsLeft, map)
+        }
+
+        viewModel.secondsRightDisplayManager.digitDisplayLiveData.observe(this) { map ->
+            setupLayoutWithNewDigit(binding.layoutSecondsRight, map)
+        }
 
         viewModel.startCounting()
     }
 
-    private fun bindLiveData(liveData: LiveData<Int>, materialCardView: MaterialCardView) {
-        liveData.observe(this) { colorRes ->
-            materialCardView.apply {
-                val resolvedColor = ContextCompat.getColor(context, colorRes)
-                setCardBackgroundColor(resolvedColor)
-            }
+    private fun setupLayoutWithNewDigit(binding: LayoutDigitDisplayBinding, map: Map<Int, Int>) {
+        styleCardView(binding.segmentTop.root, map[R.id.segmentTop]!!)
+        styleCardView(binding.segmentTopLeft.root, map[R.id.segmentTopLeft]!!)
+        styleCardView(binding.segmentTopRight.root, map[R.id.segmentTopRight]!!)
+        styleCardView(binding.segmentMiddle.root, map[R.id.segmentMiddle]!!)
+        styleCardView(binding.segmentBottomLeft.root, map[R.id.segmentBottomLeft]!!)
+        styleCardView(binding.segmentBottomRight.root, map[R.id.segmentBottomRight]!!)
+        styleCardView(binding.segmentBottom.root, map[R.id.segmentBottom]!!)
+    }
+
+    private fun styleCardView(materialCardView: MaterialCardView, @ColorRes colorRes: Int) {
+        materialCardView.apply {
+            val resolvedColor = ContextCompat.getColor(context, colorRes)
+            setCardBackgroundColor(resolvedColor)
         }
     }
 }
