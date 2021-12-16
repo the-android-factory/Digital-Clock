@@ -23,6 +23,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.hourLeftDisplayManager.digitDisplayLiveData.observe(this) { map ->
+            setupLayoutWithNewDigit(binding.layoutHourLeft, map)
+        }
+
+        viewModel.hourRightDisplayManager.digitDisplayLiveData.observe(this) { map ->
+            setupLayoutWithNewDigit(binding.layoutHourRight, map)
+        }
+
         viewModel.secondsLeftDisplayManager.digitDisplayLiveData.observe(this) { map ->
             setupLayoutWithNewDigit(binding.layoutSecondsLeft, map)
         }

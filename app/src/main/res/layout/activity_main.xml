@@ -7,23 +7,45 @@
     tools:context=".MainActivity">
 
     <include
+        android:id="@+id/layoutHourLeft"
+        layout="@layout/layout_digit_display"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toStartOf="@id/layoutHourRight"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/layoutHourRight"
+        layout="@layout/layout_digit_display"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layoutHourLeft"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
         android:id="@+id/layoutSecondsLeft"
         layout="@layout/layout_digit_display"
         android:layout_width="100dp"
         android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@id/layoutSecondsRight"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/layoutHourLeft" />
 
     <include
         android:id="@+id/layoutSecondsRight"
         layout="@layout/layout_digit_display"
         android:layout_width="100dp"
         android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/layoutSecondsLeft"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/layoutHourLeft" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
